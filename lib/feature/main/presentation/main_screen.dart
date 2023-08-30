@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:vegas_brain_game/feature/main/presentation/daily_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/mode_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/shop_screen.dart';
@@ -95,12 +96,12 @@ class _MainScreenState extends State<MainScreen> {
                         child: FutureBuilder(
                             future: SavedData.getDymond(),
                             builder: (context, data) {
-                            return Text(
-                             '${data.data}',
-                              style: AppTextStyles.s24W600(color: Colors.white),
-                            );
-                          }
-                        ),
+                              return Text(
+                                '${data.data}',
+                                style:
+                                    AppTextStyles.s24W600(color: Colors.white),
+                              );
+                            }),
                       )
                     ],
                   ),
@@ -147,6 +148,30 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             ),
+            /////////////////////////////////////
+            const SizedBox(height: 16),
+            Stack(
+              children: [
+                Image.asset(
+                  AppImages.imageQuest,
+                  height: 80,
+                ),
+                Positioned(
+                  top: 20,
+                  right: 12,
+                  child: LinearPercentIndicator(
+                    width: 190,
+                    alignment: MainAxisAlignment.start,
+                    barRadius: const Radius.circular(6),
+                    lineHeight: 16.0,
+                    percent: 0.85,
+                    backgroundColor: const Color(0xff147036),
+                    progressColor: const Color(0xffF6A136),
+                  ),
+                ),
+              ],
+            ),
+            ////////////////////////////////////////////////////////////////
             Expanded(
               child: PageView.builder(
                 physics: const BouncingScrollPhysics(
