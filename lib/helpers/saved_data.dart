@@ -4,7 +4,7 @@ import 'package:vegas_brain_game/helpers/const.dart';
 class SavedData {
   static Future<int> getCoin() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('Coin') ?? 1000;
+    return prefs.getInt('Coin') ?? 2000;
   }
 
   static Future<void> setCoin(int coin) async {
@@ -61,4 +61,6 @@ class SavedData {
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('ShopListChek', shopListChek);
   }
+
+  
 }

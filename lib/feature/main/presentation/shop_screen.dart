@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegas_brain_game/feature/main/presentation/main_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/widget/widget_shop.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/feature/widgets/styled_toasts.dart';
@@ -15,6 +16,7 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
   String text = '1';
   int dymond = 0;
+  int coint = 0;
   List<String> shopListChek = [];
   @override
   void initState() {
@@ -24,9 +26,11 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Future<void> savedData() async {
     int dymondSavedData = await SavedData.getDymond();
+    int cointSavedData = await SavedData.getCoin();
     List<String> shopListChekSavedData = await SavedData.getShopListChek();
     setState(() {
       dymond = dymondSavedData;
+      coint = cointSavedData;
       shopListChek = shopListChekSavedData;
     });
   }
@@ -74,7 +78,13 @@ class _ShopScreenState extends State<ShopScreen> {
                     Image.asset(AppImages.shopText, width: 92),
                     InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MainScreen(),
+                          ),
+                          (protected) => false,
+                        );
                       },
                       child: Image.asset(
                         AppImages.closeIcon,
@@ -91,30 +101,50 @@ class _ShopScreenState extends State<ShopScreen> {
                       image: AppImages.design1,
                       text: text == '1' ? 'SELECTED' : 'SELECT',
                       isActive: text == '1',
-                      onTap: () {
+                      onTap: () async {
                         setState(() {
                           text = '1';
                         });
+                        await SavedData.setBgIndex(0);
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design2,
                       text: text == '2' ? 'SELECTED' : 'SELECT',
                       isActive: text == '2',
-                      onTap: () {
+                      onTap: () async{
                         setState(() {
                           text = '2';
                         });
+                        await SavedData.setBgIndex(1);
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design3,
-                      text: text == '3' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '3',
-                      onTap: () {
+                      text: shopListChek.contains('3')
+                          ? text == '3'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('3') ? text == '3' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '3';
+                          shopListChek.contains('3') ? text = '3' : null;
                         });
+                        if (shopListChek.contains('3')) {
+                           await SavedData.setBgIndex(2);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('3');
+                            await SavedData.setShopListChek(shopListChek);
+                           
+                          }
+                        }
                       },
                     ),
                   ],
@@ -126,34 +156,88 @@ class _ShopScreenState extends State<ShopScreen> {
                   children: [
                     WidgetShop(
                       image: AppImages.design4,
-                      text: text == '4' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '4',
-                      onTap: () {
+                      text: shopListChek.contains('4')
+                          ? text == '4'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('4') ? text == '4' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '4';
+                          shopListChek.contains('4') ? text = '4' : null;
                         });
+                        if (shopListChek.contains('4')) {
+                           await SavedData.setBgIndex(3);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('4');
+                            await SavedData.setShopListChek(shopListChek);
+                           
+                          }
+                        }
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design5,
-                      text: text == '5' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '5',
-                      onTap: () {
+                      text: shopListChek.contains('5')
+                          ? text == '5'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('5') ? text == '5' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '5';
+                          shopListChek.contains('5') ? text = '5' : null;
                         });
+                        if (shopListChek.contains('5')) {
+                           await SavedData.setBgIndex(4);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('5');
+                            await SavedData.setShopListChek(shopListChek);
+                           
+                          }
+                        }
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design6,
-                      text: text == '6' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '6',
-                      onTap: () {
+                      text: shopListChek.contains('6')
+                          ? text == '6'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('6') ? text == '6' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '6';
+                          shopListChek.contains('6') ? text = '6' : null;
                         });
+                        if (shopListChek.contains('6')) {
+                           await SavedData.setBgIndex(5);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('6');
+                            await SavedData.setShopListChek(shopListChek);
+                           
+                          }
+                        }
                       },
-                    ),
+                    )
                   ],
                 ),
                 //////////////////////////////////
@@ -163,32 +247,86 @@ class _ShopScreenState extends State<ShopScreen> {
                   children: [
                     WidgetShop(
                       image: AppImages.design7,
-                      text: text == '7' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '7',
-                      onTap: () {
+                      text: shopListChek.contains('7')
+                          ? text == '7'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('7') ? text == '7' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '7';
+                          shopListChek.contains('7') ? text = '7' : null;
                         });
+                        if (shopListChek.contains('7')) {
+                          await SavedData.setBgIndex(6);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('7');
+                            await SavedData.setShopListChek(shopListChek);
+                            
+                          }
+                        }
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design8,
-                      text: text == '8' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '8',
-                      onTap: () {
+                      text: shopListChek.contains('8')
+                          ? text == '8'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('8') ? text == '8' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '8';
+                          shopListChek.contains('8') ? text = '8' : null;
                         });
+                        if (shopListChek.contains('8')) {
+                          await SavedData.setBgIndex(7);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('8');
+                            await SavedData.setShopListChek(shopListChek);
+                            
+                          }
+                        }
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design9,
-                      text: text == '9' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '9',
-                      onTap: () {
+                      text: shopListChek.contains('9')
+                          ? text == '9'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'point',
+                      isActive:
+                          shopListChek.contains('9') ? text == '9' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '9';
+                          shopListChek.contains('9') ? text = '9' : null;
                         });
+                        if (shopListChek.contains('9')) {
+                          await SavedData.setBgIndex(8);
+                        } else {
+                          coint = coint - 999;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough money");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            shopListChek.add('9');
+                            await SavedData.setShopListChek(shopListChek);
+                            
+                          }
+                        }
                       },
                     ),
                   ],
@@ -200,39 +338,85 @@ class _ShopScreenState extends State<ShopScreen> {
                   children: [
                     WidgetShop(
                       image: AppImages.design10,
-                      text: text == '10' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '10',
-                      onTap: () {
+                      text: shopListChek.contains('10')
+                          ? text == '10'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'dymond',
+                      isActive:
+                          shopListChek.contains('10') ? text == '10' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '10';
+                          shopListChek.contains('10') ? text = '10' : null;
                         });
+                        if (shopListChek.contains('10')) {
+                          await SavedData.setBgIndex(9);
+                        } else {
+                          dymond = dymond - 25;
+                          if (dymond < 0) {
+                            showErrorSnackBar("You don't have enough diamonds");
+                          } else {
+                            await SavedData.setDymond(dymond);
+                            shopListChek.add('10');
+                            await SavedData.setShopListChek(shopListChek);
+                            
+                          }
+                        }
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design11,
-                      text: text == '11' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '11',
-                      onTap: () {
+                      text: shopListChek.contains('11')
+                          ? text == '11'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'dymond',
+                      isActive:
+                          shopListChek.contains('11') ? text == '11' : false,
+                      onTap: () async {
                         setState(() {
-                          text = '11';
+                          shopListChek.contains('11') ? text = '11' : null;
                         });
+                        if (shopListChek.contains('11')) {
+                           await SavedData.setBgIndex(10);
+                        } else {
+                          dymond = dymond - 25;
+                          if (dymond < 0) {
+                            showErrorSnackBar("You don't have enough diamonds");
+                          } else {
+                            await SavedData.setDymond(dymond);
+                            shopListChek.add('11');
+                            await SavedData.setShopListChek(shopListChek);
+                           
+                          }
+                        }
                       },
                     ),
                     WidgetShop(
                       image: AppImages.design12,
-                      text: text == '12' ? 'SELECTED' : 'SELECT',
-                      isActive: text == '12',
+                      text: shopListChek.contains('12')
+                          ? text == '12'
+                              ? 'SELECTED'
+                              : 'SELECT'
+                          : 'dymond',
+                      isActive:
+                          shopListChek.contains('12') ? text == '12' : false,
                       onTap: () async {
                         setState(() {
-                          text = '12';
+                          shopListChek.contains('12') ? text = '12' : null;
                         });
-                        dymond = dymond - 25;
-                        if (dymond < 0) {
-                          showErrorSnackBar("You don't have enough money");
+                        if (shopListChek.contains('12')) {
+                          await SavedData.setBgIndex(11);
                         } else {
-                          await SavedData.setDymond(dymond);
-                          shopListChek.add('12');
-                          await SavedData.setShopListChek(shopListChek);
+                          dymond = dymond - 25;
+                          if (dymond < 0) {
+                            showErrorSnackBar("You don't have enough diamonds");
+                          } else {
+                            await SavedData.setDymond(dymond);
+                            shopListChek.add('12');
+                            await SavedData.setShopListChek(shopListChek);
+                            
+                          }
                         }
                       },
                     ),
