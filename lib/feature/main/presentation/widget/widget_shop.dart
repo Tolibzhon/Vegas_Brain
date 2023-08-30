@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegas_brain_game/helpers/app_images.dart';
 import 'package:vegas_brain_game/helpers/app_text_styles.dart';
 
 class WidgetShop extends StatelessWidget {
@@ -28,35 +29,39 @@ class WidgetShop extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        child: Container(
-          alignment: AlignmentDirectional.center,
-          width: 88,
-          height: 24,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            gradient: isActive
-                ? const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xff2ADA46),
-                      Color(0xff23780E),
-                    ],
-                  )
-                : const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xffFFE158),
-                      Color(0xffB5970F),
-                    ],
-                  ),
-          ),
-          child: Text(
-            text,
-            style: AppTextStyles.s14W600(color: Colors.white),
-          ),
-        ),
+        child: text == 'dymond'
+            ? Image.asset(AppImages.dymondButtom)
+            :  text == 'point'
+            ? Image.asset(AppImages.pointButtom)
+            :Container(
+                alignment: AlignmentDirectional.center,
+                width: 88,
+                height: 24,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  gradient: isActive
+                      ? const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xff2ADA46),
+                            Color(0xff23780E),
+                          ],
+                        )
+                      : const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xffFFE158),
+                            Color(0xffB5970F),
+                          ],
+                        ),
+                ),
+                child: Text(
+                  text,
+                  style: AppTextStyles.s14W600(color: Colors.white),
+                ),
+              ),
       ),
     );
   }

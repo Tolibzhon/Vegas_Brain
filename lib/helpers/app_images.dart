@@ -64,4 +64,7 @@ class AppImages {
   static const String youLose = 'assets/images/youLose.png';
   static const String youWin = 'assets/images/youWin.png';
   static const String simplyGame = 'assets/images/simplyGame.png';
+
+  static const String pointButtom = 'assets/images/pointButtom.png';
+  static const String dymondButtom = 'assets/images/dymondButtom.png';
 }
