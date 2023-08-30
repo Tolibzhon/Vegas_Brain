@@ -3,15 +3,19 @@ class AppImages {
 
   static const String imageBg = 'assets/images/ImageBg.png';
   static const String imageDaily = 'assets/images/ImageDaily.png';
+  static const String imageTime = 'assets/images/ImageTime.png';
   static const String settingsText = 'assets/images/SettingsText.png';
   static const String bonusButton = 'assets/images/bonusButton.png';
   static const String closeIcon = 'assets/images/closeIcon.png';
   static const String coinContainer = 'assets/images/coinContainer.png';
   static const String dailyText = 'assets/images/dailyText.png';
   static const String dymondConatiner = 'assets/images/dymondConatiner.png';
+  static const String imageAttempts = 'assets/images/imageAttempts.png';
   static const String imagePremium = 'assets/images/imagePremium.png';
   static const String imageShop = 'assets/images/imageShop.png';
   static const String imageSplash = 'assets/images/imageSplash.png';
+  static const String imageTournament = 'assets/images/imageTournament.png';
+  static const String imageTwoPlayer = 'assets/images/imageTwoPlayer.png';
   static const String premiumButton = 'assets/images/premiumButton.png';
   static const String premiumText = 'assets/images/premiumText.png';
   static const String privacy = 'assets/images/privacy.png';
