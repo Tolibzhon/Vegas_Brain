@@ -28,43 +28,40 @@ class AppImages {
   static const String design7 = 'assets/images/design7.png';
   static const String design8 = 'assets/images/design8.png';
   static const String design9 = 'assets/images/design9.png';
+  static const String dymondButtom = 'assets/images/dymondButtom.png';
   static const String dymondConatiner = 'assets/images/dymondConatiner.png';
+  static const String homeButton = 'assets/images/homeButton.png';
   static const String imageAttempts = 'assets/images/imageAttempts.png';
+  static const String imageMain = 'assets/images/imageMain.png';
   static const String imagePremium = 'assets/images/imagePremium.png';
+  static const String imageQuest = 'assets/images/imageQuest.png';
   static const String imageShop = 'assets/images/imageShop.png';
   static const String imageSplash = 'assets/images/imageSplash.png';
   static const String imageTournament = 'assets/images/imageTournament.png';
   static const String imageTwoPlayer = 'assets/images/imageTwoPlayer.png';
+  static const String modeText = 'assets/images/modeText.png';
+  static const String pointButtom = 'assets/images/pointButtom.png';
   static const String premiumButton = 'assets/images/premiumButton.png';
   static const String premiumText = 'assets/images/premiumText.png';
   static const String privacy = 'assets/images/privacy.png';
   static const String rate = 'assets/images/rate.png';
+  static const String rectangleBac = 'assets/images/rectangleBac.png';
+  static const String repeatButton = 'assets/images/repeatButton.png';
   static const String restore = 'assets/images/restore.png';
   static const String settingsIcon = 'assets/images/settingsIcon.png';
   static const String shopText = 'assets/images/shopText.png';
+  static const String simplyGame = 'assets/images/simplyGame.png';
+  static const String starsLose = 'assets/images/starsLose.png';
+  static const String starsWin = 'assets/images/starsWin.png';
   static const String startButton = 'assets/images/startButton.png';
   static const String support = 'assets/images/support.png';
   static const String terms = 'assets/images/terms.png';
   static const String titlePremium = 'assets/images/titlePremium.png';
-
-  static const String imageMain = 'assets/images/imageMain.png';
-  static const String modeText = 'assets/images/modeText.png';
-
   static const String x23 = 'assets/images/x23.png';
   static const String x24 = 'assets/images/x24.png';
   static const String x25 = 'assets/images/x25.png';
   static const String x34 = 'assets/images/x34.png';
   static const String x36 = 'assets/images/x36.png';
-
-  static const String homeButton = 'assets/images/homeButton.png';
-  static const String rectangleBac = 'assets/images/rectangleBac.png';
-  static const String repeatButton = 'assets/images/repeatButton.png';
-  static const String starsLose = 'assets/images/starsLose.png';
-  static const String starsWin = 'assets/images/starsWin.png';
   static const String youLose = 'assets/images/youLose.png';
   static const String youWin = 'assets/images/youWin.png';
-  static const String simplyGame = 'assets/images/simplyGame.png';
-
-  static const String pointButtom = 'assets/images/pointButtom.png';
-  static const String dymondButtom = 'assets/images/dymondButtom.png';
 }
