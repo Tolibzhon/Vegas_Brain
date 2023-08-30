@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:vegas_brain_game/feature/main/presentation/widget/widget_shop.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
 
-class ShopScreen extends StatelessWidget {
+class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
 
+  @override
+  State<ShopScreen> createState() => _ShopScreenState();
+}
+
+class _ShopScreenState extends State<ShopScreen> {
+  String text = '1';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +63,154 @@ class ShopScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WidgetShop(
+                      image: AppImages.design1,
+                      text: text == '1' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '1',
+                      onTap: () {
+                        setState(() {
+                          text = '1';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design2,
+                      text: text == '2' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '2',
+                      onTap: () {
+                        setState(() {
+                          text = '2';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design3,
+                      text: text == '3' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '3',
+                      onTap: () {
+                        setState(() {
+                          text = '3';
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                //////////////////////////////////
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WidgetShop(
+                      image: AppImages.design4,
+                      text: text == '4' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '4',
+                      onTap: () {
+                        setState(() {
+                          text = '4';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design5,
+                      text: text == '5' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '5',
+                      onTap: () {
+                        setState(() {
+                          text = '5';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design6,
+                      text: text == '6' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '6',
+                      onTap: () {
+                        setState(() {
+                          text = '6';
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                //////////////////////////////////
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WidgetShop(
+                      image: AppImages.design7,
+                      text: text == '7' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '7',
+                      onTap: () {
+                        setState(() {
+                          text = '7';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design8,
+                      text: text == '8' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '8',
+                      onTap: () {
+                        setState(() {
+                          text = '8';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design9,
+                      text: text == '9' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '9',
+                      onTap: () {
+                        setState(() {
+                          text = '9';
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                //////////////////////////////////
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WidgetShop(
+                      image: AppImages.design10,
+                      text: text == '10' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '10',
+                      onTap: () {
+                        setState(() {
+                          text = '10';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design11,
+                      text: text == '11' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '11',
+                      onTap: () {
+                        setState(() {
+                          text = '11';
+                        });
+                      },
+                    ),
+                    WidgetShop(
+                      image: AppImages.design12,
+                      text: text == '12' ? 'SELECTED' : 'SELECT',
+                      isActive: text == '12',
+                      onTap: () {
+                        setState(() {
+                          text = '12';
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

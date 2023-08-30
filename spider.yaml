@@ -33,3 +33,6 @@ groups:
   - path: assets/images
     class_name: AppImages
     types: [ .png, .jpg, .jpeg, .webp, .webm, .bmp ]
+  - path: assets/card/
+    class_name: AppCard
+    types: [ .png, .jpg, .jpeg, .webp, .webm, .bmp ]
