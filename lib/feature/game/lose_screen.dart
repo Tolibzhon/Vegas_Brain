@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vegas_brain_game/feature/game/game.screen.dart';
+import 'package:vegas_brain_game/feature/main/presentation/main_screen.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_colors.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
@@ -75,7 +77,15 @@ class LoseScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                   Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const GameScreen(),
+                    ),
+                    (protected) => false,
+                  );
+                },
                 child: Image.asset(
                   AppImages.repeatButton,
                   width: 316,
@@ -83,7 +93,15 @@ class LoseScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainScreen(),
+                    ),
+                    (protected) => false,
+                  );
+                },
                 child: Image.asset(
                   AppImages.homeButton,
                   width: 316,

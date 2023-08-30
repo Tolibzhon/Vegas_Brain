@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vegas_brain_game/feature/main/presentation/widget/widget_shop.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
+import 'package:vegas_brain_game/feature/widgets/styled_toasts.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
+import 'package:vegas_brain_game/helpers/saved_data.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
@@ -12,6 +14,23 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   String text = '1';
+  int dymond = 0;
+  List<String> shopListChek = [];
+  @override
+  void initState() {
+    super.initState();
+    savedData();
+  }
+
+  Future<void> savedData() async {
+    int dymondSavedData = await SavedData.getDymond();
+    List<String> shopListChekSavedData = await SavedData.getShopListChek();
+    setState(() {
+      dymond = dymondSavedData;
+      shopListChek = shopListChekSavedData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,10 +222,18 @@ class _ShopScreenState extends State<ShopScreen> {
                       image: AppImages.design12,
                       text: text == '12' ? 'SELECTED' : 'SELECT',
                       isActive: text == '12',
-                      onTap: () {
+                      onTap: () async {
                         setState(() {
                           text = '12';
                         });
+                        dymond = dymond - 25;
+                        if (dymond < 0) {
+                          showErrorSnackBar("You don't have enough money");
+                        } else {
+                          await SavedData.setDymond(dymond);
+                          shopListChek.add('12');
+                          await SavedData.setShopListChek(shopListChek);
+                        }
                       },
                     ),
                   ],

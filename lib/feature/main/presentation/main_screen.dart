@@ -6,6 +6,8 @@ import 'package:vegas_brain_game/feature/settings/presentation/settings_screen.d
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
 import 'package:vegas_brain_game/helpers/app_text_styles.dart';
+import 'package:vegas_brain_game/helpers/const.dart';
+import 'package:vegas_brain_game/helpers/saved_data.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -72,10 +74,15 @@ class _MainScreenState extends State<MainScreen> {
                       Image.asset(AppImages.coinContainer, height: 40),
                       Positioned(
                         right: 8,
-                        child: Text(
-                          '10690',
-                          style: AppTextStyles.s24W600(color: Colors.white),
-                        ),
+                        child: FutureBuilder(
+                            future: SavedData.getCoin(),
+                            builder: (context, data) {
+                              return Text(
+                                '${data.data}',
+                                style:
+                                    AppTextStyles.s24W600(color: Colors.white),
+                              );
+                            }),
                       )
                     ],
                   ),
@@ -85,9 +92,14 @@ class _MainScreenState extends State<MainScreen> {
                       Image.asset(AppImages.dymondConatiner, height: 40),
                       Positioned(
                         right: 8,
-                        child: Text(
-                          '25',
-                          style: AppTextStyles.s24W600(color: Colors.white),
+                        child: FutureBuilder(
+                            future: SavedData.getDymond(),
+                            builder: (context, data) {
+                            return Text(
+                             '${data.data}',
+                              style: AppTextStyles.s24W600(color: Colors.white),
+                            );
+                          }
                         ),
                       )
                     ],
@@ -155,7 +167,19 @@ class _MainScreenState extends State<MainScreen> {
                       horizontal: 2,
                     ),
                     child: InkWell(
-                      onTap: () {
+                      onTap: () async {
+                        if (index == 0) {
+                          await SavedData.setGameSimply(GameSimply.norm);
+                        } else if (index == 1) {
+                          await SavedData.setGameSimply(GameSimply.time);
+                        } else if (index == 2) {
+                          await SavedData.setGameSimply(
+                              GameSimply.gameAttempts);
+                        } else if (index == 3) {
+                          await SavedData.setGameSimply(GameSimply.twoPlayer);
+                        } else if (index == 4) {
+                          await SavedData.setGameSimply(GameSimply.tournament);
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(

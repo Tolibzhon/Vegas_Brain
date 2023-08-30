@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegas_brain_game/feature/game/game.screen.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_colors.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
@@ -107,6 +108,21 @@ class _ModeScreenState extends State<ModeScreen> {
                       numGameMode = GameMode.x23;
                     });
                     await SavedData.setGameMode(numGameMode);
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GameScreen(
+                           
+                          ),
+                        ),
+                      );
+                    // Navigator.pushAndRemoveUntil(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const GameScreen(),
+                    //   ),
+                    //   (protected) => false,
+                    // );
                   },
                 ),
                 const SizedBox(height: 16),
@@ -120,6 +136,13 @@ class _ModeScreenState extends State<ModeScreen> {
                       numGameMode = GameMode.x24;
                     });
                     await SavedData.setGameMode(numGameMode);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameScreen(),
+                      ),
+                      (protected) => false,
+                    );
                   },
                 ),
                 const SizedBox(height: 16),
@@ -133,6 +156,13 @@ class _ModeScreenState extends State<ModeScreen> {
                       numGameMode = GameMode.x25;
                     });
                     await SavedData.setGameMode(numGameMode);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameScreen(),
+                      ),
+                      (protected) => false,
+                    );
                   },
                 ),
                 const SizedBox(height: 16),
@@ -146,6 +176,13 @@ class _ModeScreenState extends State<ModeScreen> {
                       numGameMode = GameMode.x34;
                     });
                     await SavedData.setGameMode(numGameMode);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameScreen(),
+                      ),
+                      (protected) => false,
+                    );
                   },
                 ),
                 const SizedBox(height: 16),
@@ -159,6 +196,13 @@ class _ModeScreenState extends State<ModeScreen> {
                       numGameMode = GameMode.x36;
                     });
                     await SavedData.setGameMode(numGameMode);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameScreen(),
+                      ),
+                      (protected) => false,
+                    );
                   },
                 ),
               ],
