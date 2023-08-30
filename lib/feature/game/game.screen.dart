@@ -23,10 +23,13 @@ class _GameScreenState extends State<GameScreen> {
   final Game _game = Game();
 
   late int _coin;
+
   String textGameSimply = '';
   String textGameMode = '';
 
   int _count = 0;
+  int _diamond = 0;
+  int _quest = 0;
 
   int openedCardCount = 0;
 
@@ -34,6 +37,17 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
     _initializeGame();
+    _quests();
+  }
+
+  Future<void> _quests() async {
+    int questSavedData = await SavedData.getQuest();
+    int diamondSavedData = await SavedData.getDymond();
+
+    setState(() {
+      _quest = questSavedData;
+      _diamond = diamondSavedData;
+    });
   }
 
   Future<void> _initializeGame() async {
@@ -153,7 +167,7 @@ class _GameScreenState extends State<GameScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                         Navigator.pushAndRemoveUntil(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MainScreen(),
@@ -164,7 +178,10 @@ class _GameScreenState extends State<GameScreen> {
                       child: Image.asset(AppImages.closeIcon, width: 40),
                     ),
                     textGameSimply == GameSimply.norm
-                        ? Image.asset(AppImages.simplyGame,height: 30,)
+                        ? Image.asset(
+                            AppImages.simplyGame,
+                            height: 30,
+                          )
                         : textGameSimply == GameSimply.time
                             ? Text(minutesConvert(seconds),
                                 style:
@@ -173,7 +190,7 @@ class _GameScreenState extends State<GameScreen> {
                                 ? Text('$tries',
                                     style: AppTextStyles.s36W900(
                                         color: Colors.white))
-                                : Text(''),
+                                : const Text(''),
                     const SizedBox(width: 40),
                   ],
                 ),
@@ -218,7 +235,8 @@ class _GameScreenState extends State<GameScreen> {
                                   if (_game.matchCheck.length == 2) {
                                     if (_game.matchCheck[0].values.first ==
                                         _game.matchCheck[1].values.first) {
-                                      if (textGameSimply == GameSimply.gameAttempts) {
+                                      if (textGameSimply ==
+                                          GameSimply.gameAttempts) {
                                         setState(() {
                                           tries--;
                                         });
@@ -229,74 +247,12 @@ class _GameScreenState extends State<GameScreen> {
                                         _count = 100;
                                         _coin += _count;
                                         await SavedData.setCoin(_coin);
-                                        // if (textGameSimply == GameSimply.norm) {
-                                        //   if (textGameMode ==
-                                        //       GameMode.x24) {
-                                        //     _coin += 100;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x34) {
-                                        //     _count = 200;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x44) {
-                                        //     _count = 300;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x46) {
-                                        //     _count = 500;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   }
-                                        // } else if (textGameSimply ==
-                                        //     GameSimply.time) {
-                                        //   if (textGameMode ==
-                                        //       GameMode.x24) {
-                                        //     _count = 200;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x34) {
-                                        //     _count = 300;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x44) {
-                                        //     _count = 400;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x46) {
-                                        //     _count = 600;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   }
-                                        // } else if (textGameSimply ==
-                                        //     GameSimply.gameAttempts) {
-                                        //   if (textGameMode ==
-                                        //       GameMode.x24) {
-                                        //     _count = 300;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x34) {
-                                        //     _count = 400;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x44) {
-                                        //     _count = 500;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   } else if (textGameMode ==
-                                        //       GameMode.x46) {
-                                        //     _count = 700;
-                                        //     _coin += _count;
-                                        //     await SavedData.setCoin(_coin);
-                                        //   }
-                                        // }
+                                        _quest += 1;
+                                        await SavedData.setQuest(_quest);
+                                        if (_quest == 20) {
+                                          _diamond += 1;
+                                          await SavedData.setDymond(_diamond);
+                                        }
 
                                         Navigator.pushAndRemoveUntil(
                                           context,

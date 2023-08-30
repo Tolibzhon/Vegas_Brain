@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:vegas_brain_game/config/premium.dart';
+import 'package:vegas_brain_game/feature/auth/premium_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/daily_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/mode_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/shop_screen.dart';
@@ -21,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   late PageController pageController;
   int pageIndex = 0;
   bool _chek = false;
+  int _quest = 0;
 
   List<String> listImage = [
     AppImages.imageMain,
@@ -29,11 +32,31 @@ class _MainScreenState extends State<MainScreen> {
     AppImages.imageTwoPlayer,
     AppImages.imageTournament,
   ];
+  List<String> listImageLock = [
+    AppImages.imageMain,
+    AppImages.imageTimeLock,
+    AppImages.imageAttemptsLock,
+    AppImages.imageTwoPlayerLock,
+    AppImages.imageTournamentLock,
+  ];
 
   @override
   void initState() {
     pageController = PageController(viewportFraction: 0.8);
     super.initState();
+    _quests();
+  }
+
+  Future<void> _quests() async {
+    int questSavedData = await SavedData.getQuest();
+
+    setState(() {
+      _quest = questSavedData;
+    });
+    if (_quest > 20) {
+      _quest = 0;
+      await SavedData.setQuest(_quest);
+    }
   }
 
   @override
@@ -164,7 +187,7 @@ class _MainScreenState extends State<MainScreen> {
                     alignment: MainAxisAlignment.start,
                     barRadius: const Radius.circular(6),
                     lineHeight: 16.0,
-                    percent: 0.85,
+                    percent: (_quest / 20),
                     backgroundColor: const Color(0xff147036),
                     progressColor: const Color(0xffF6A136),
                   ),
@@ -193,6 +216,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     child: InkWell(
                       onTap: () async {
+                        final isBuy = await Premium.getSubscrp();
                         if (index == 0) {
                           await SavedData.setGameSimply(GameSimply.norm);
                         } else if (index == 1) {
@@ -205,12 +229,23 @@ class _MainScreenState extends State<MainScreen> {
                         } else if (index == 4) {
                           await SavedData.setGameSimply(GameSimply.tournament);
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ModeScreen(),
-                          ),
-                        );
+                        if (!isBuy && index > 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PremiumScreen(
+                                isPop: true,
+                              ),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ModeScreen(),
+                            ),
+                          );
+                        }
                       },
                       child: Image.asset(
                         listImage[index],

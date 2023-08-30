@@ -32,14 +32,21 @@ class AppImages {
   static const String dymondConatiner = 'assets/images/dymondConatiner.png';
   static const String homeButton = 'assets/images/homeButton.png';
   static const String imageAttempts = 'assets/images/imageAttempts.png';
+  static const String imageAttemptsLock = 'assets/images/imageAttemptsLock.png';
   static const String imageMain = 'assets/images/imageMain.png';
   static const String imagePremium = 'assets/images/imagePremium.png';
   static const String imageQuest = 'assets/images/imageQuest.png';
   static const String imageShop = 'assets/images/imageShop.png';
   static const String imageSplash = 'assets/images/imageSplash.png';
+  static const String imageTimeLock = 'assets/images/imageTimeLock.png';
   static const String imageTournament = 'assets/images/imageTournament.png';
+  static const String imageTournamentLock =
+      'assets/images/imageTournamentLock.png';
   static const String imageTwoPlayer = 'assets/images/imageTwoPlayer.png';
+  static const String imageTwoPlayerLock =
+      'assets/images/imageTwoPlayerLock.png';
   static const String modeText = 'assets/images/modeText.png';
+  static const String moodPremium = 'assets/images/moodPremium.png';
   static const String pointButtom = 'assets/images/pointButtom.png';
   static const String premiumButton = 'assets/images/premiumButton.png';
   static const String premiumText = 'assets/images/premiumText.png';

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vegas_brain_game/config/premium.dart';
+import 'package:vegas_brain_game/feature/auth/premium_screen.dart';
 import 'package:vegas_brain_game/feature/game/game.screen.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_colors.dart';
@@ -94,7 +96,7 @@ class _ModeScreenState extends State<ModeScreen> {
                       child: Image.asset(AppImages.closeIcon, width: 40),
                     ),
                     const SizedBox(width: 23),
-                    Image.asset(AppImages.modeText, height: 36),
+                    Image.asset(AppImages.modeText, height: 34),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -108,21 +110,12 @@ class _ModeScreenState extends State<ModeScreen> {
                       numGameMode = GameMode.x23;
                     });
                     await SavedData.setGameMode(numGameMode);
-                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const GameScreen(
-                           
-                          ),
-                        ),
-                      );
-                    // Navigator.pushAndRemoveUntil(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const GameScreen(),
-                    //   ),
-                    //   (protected) => false,
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameScreen(),
+                      ),
+                    );
                   },
                 ),
                 const SizedBox(height: 16),
@@ -186,24 +179,62 @@ class _ModeScreenState extends State<ModeScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                buildModeContainer(
-                  numGameMode == GameMode.x36,
-                  AppColors.colorYellow5,
-                  AppColors.colorYellow5,
-                  AppImages.x36,
-                  () async {
-                    setState(() {
-                      numGameMode = GameMode.x36;
-                    });
-                    await SavedData.setGameMode(numGameMode);
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const GameScreen(),
-                      ),
-                      (protected) => false,
-                    );
-                  },
+                Stack(
+                  children: [
+                    buildModeContainer(
+                      numGameMode == GameMode.x36,
+                      AppColors.colorYellow5,
+                      AppColors.colorYellow5,
+                      AppImages.x36,
+                      () async {
+                        setState(() {
+                          numGameMode = GameMode.x36;
+                        });
+                        await SavedData.setGameMode(numGameMode);
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const GameScreen(),
+                          ),
+                          (protected) => false,
+                        );
+                      },
+                    ),
+                    FutureBuilder(
+                      future: Premium.getSubscrp(),
+                      builder: (context, AsyncSnapshot<bool?> snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!) {
+                            return const SizedBox();
+                          } else if (!snapshot.data!) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PremiumScreen(
+                                      isPop: true,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Image.asset(
+                                AppImages.moodPremium,
+                                height: 66,
+                              ),
+                            );
+                          } else if (!snapshot.data!) {
+                            return const SizedBox();
+                          }
+                        }
+                        return Image.asset(
+                          AppImages.moodPremium,
+                          height: 64,
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

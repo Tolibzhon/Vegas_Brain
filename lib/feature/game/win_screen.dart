@@ -77,13 +77,13 @@ class WinScreen extends StatelessWidget {
               const SizedBox(height: 20),
               InkWell(
                 onTap: () {
-                   Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MainScreen(),
-                          ),
-                          (protected) => false,
-                        );
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainScreen(),
+                    ),
+                    (protected) => false,
+                  );
                 },
                 child: Image.asset(
                   AppImages.homeButton,
@@ -94,7 +94,6 @@ class WinScreen extends StatelessWidget {
           ),
         ),
       ),
-   
     );
   }
 }
