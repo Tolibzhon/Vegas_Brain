@@ -1,19 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:vegas_brain_game/feature/main/presentation/daily_screen.dart';
+import 'package:vegas_brain_game/feature/main/presentation/mode_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/shop_screen.dart';
 import 'package:vegas_brain_game/feature/settings/presentation/settings_screen.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
 import 'package:vegas_brain_game/helpers/app_text_styles.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  late PageController pageController;
+  int pageIndex = 0;
+  bool _chek = false;
+
+  List<String> listImage = [
+    AppImages.imageMain,
+    AppImages.imageTime,
+    AppImages.imageAttempts,
+    AppImages.imageTwoPlayer,
+    AppImages.imageTournament,
+  ];
+
+  @override
+  void initState() {
+    pageController = PageController(viewportFraction: 0.8);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
         height: getHeight(context),
         width: getWidth(context),
         decoration: const BoxDecoration(
@@ -32,76 +61,122 @@ class MainScreen extends StatelessWidget {
         child: SafeArea(
             child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Image.asset(AppImages.coinContainer, height: 40),
-                    Positioned(
-                      right: 8,
-                      child: Text(
-                        '10690',
-                        style: AppTextStyles.s24W600(color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-                Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Image.asset(AppImages.dymondConatiner, height: 40),
-                    Positioned(
-                      right: 8,
-                      child: Text(
-                        '25',
-                        style: AppTextStyles.s24W600(color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsScreen(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Image.asset(AppImages.coinContainer, height: 40),
+                      Positioned(
+                        right: 8,
+                        child: Text(
+                          '10690',
+                          style: AppTextStyles.s24W600(color: Colors.white),
                         ),
-                      );
-                    },
-                    child: Image.asset(
-                      AppImages.settingsIcon,
-                      height: 40,
-                    )),
-              ],
+                      )
+                    ],
+                  ),
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Image.asset(AppImages.dymondConatiner, height: 40),
+                      Positioned(
+                        right: 8,
+                        child: Text(
+                          '25',
+                          style: AppTextStyles.s24W600(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsScreen(),
+                          ),
+                        );
+                      },
+                      child: Image.asset(
+                        AppImages.settingsIcon,
+                        height: 40,
+                      )),
+                ],
+              ),
             ),
             const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DailyScreen()));
-                  },
-                  child: Image.asset(AppImages.imageDaily, height: 80),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ShopScreen()));
-                  },
-                  child: Image.asset(AppImages.imageShop, height: 80),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DailyScreen()));
+                    },
+                    child: Image.asset(AppImages.imageDaily, height: 80),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ShopScreen()));
+                    },
+                    child: Image.asset(AppImages.imageShop, height: 80),
+                  ),
+                ],
+              ),
             ),
-            const Spacer(),
-            Image.asset(AppImages.bonusButton),
+            Expanded(
+              child: PageView.builder(
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                controller: pageController,
+                itemCount: listImage.length,
+                onPageChanged: ((value) => setState(() => pageIndex = value)),
+                itemBuilder: (context, int index) {
+                  if (pageIndex == index) {
+                    _chek = true;
+                  } else {
+                    _chek = false;
+                  }
+                  return AnimatedPadding(
+                    duration: const Duration(milliseconds: 300),
+                    padding: EdgeInsets.symmetric(
+                      vertical: _chek ? 50 : 60,
+                      horizontal: 2,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ModeScreen(),
+                          ),
+                        );
+                      },
+                      child: Image.asset(
+                        listImage[index],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Image.asset(
+                AppImages.bonusButton,
+              ),
+            ),
           ],
         )),
       ),
