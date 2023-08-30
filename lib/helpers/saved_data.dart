@@ -2,9 +2,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vegas_brain_game/helpers/const.dart';
 
 class SavedData {
+  static Future<int> getQuest() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('Quest') ?? 0;
+  }
+
+  static Future<void> setQuest(int quest) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('Quest', quest);
+  }
+
   static Future<int> getCoin() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('Coin') ?? 2000;
+    return prefs.getInt('Coin') ?? 1000;
   }
 
   static Future<void> setCoin(int coin) async {
@@ -21,7 +31,7 @@ class SavedData {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('Dymond', dymond);
   }
-  
+
   static Future<String> getGameSimply() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('GameSimply') ?? GameSimply.norm;
@@ -61,6 +71,4 @@ class SavedData {
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('ShopListChek', shopListChek);
   }
-
-  
 }
