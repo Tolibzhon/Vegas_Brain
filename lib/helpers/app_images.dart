@@ -46,4 +46,21 @@ class AppImages {
   static const String support = 'assets/images/support.png';
   static const String terms = 'assets/images/terms.png';
   static const String titlePremium = 'assets/images/titlePremium.png';
+
+  static const String imageMain = 'assets/images/imageMain.png';
+  static const String modeText = 'assets/images/modeText.png';
+
+  static const String x23 = 'assets/images/x23.png';
+  static const String x24 = 'assets/images/x24.png';
+  static const String x25 = 'assets/images/x25.png';
+  static const String x34 = 'assets/images/x34.png';
+  static const String x36 = 'assets/images/x36.png';
+
+  static const String homeButton = 'assets/images/homeButton.png';
+  static const String rectangleBac = 'assets/images/rectangleBac.png';
+  static const String repeatButton = 'assets/images/repeatButton.png';
+  static const String starsLose = 'assets/images/starsLose.png';
+  static const String starsWin = 'assets/images/starsWin.png';
+  static const String youLose = 'assets/images/youLose.png';
+  static const String youWin = 'assets/images/youWin.png';
 }
