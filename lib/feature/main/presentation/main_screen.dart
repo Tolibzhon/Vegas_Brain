@@ -7,6 +7,7 @@ import 'package:vegas_brain_game/feature/main/presentation/mode_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/shop_screen.dart';
 import 'package:vegas_brain_game/feature/settings/presentation/settings_screen.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
+import 'package:vegas_brain_game/feature/widgets/styled_toasts.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
 import 'package:vegas_brain_game/helpers/app_text_styles.dart';
 import 'package:vegas_brain_game/helpers/const.dart';
@@ -24,6 +25,11 @@ class _MainScreenState extends State<MainScreen> {
   int pageIndex = 0;
   bool _chek = false;
   int _quest = 0;
+  bool _isBuy = false;
+  bool _isTime = false;
+  bool _isAttem = false;
+  int dymond = 0;
+  int coint = 0;
 
   List<String> listImage = [
     AppImages.imageMain,
@@ -49,9 +55,19 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> _quests() async {
     int questSavedData = await SavedData.getQuest();
+    bool isBuy = await Premium.getSubscrp();
+    bool isTime = await SavedData.getTime();
+    bool isAttem = await SavedData.getAttempts();
+    int dymondSavedData = await SavedData.getDymond();
+    int cointSavedData = await SavedData.getCoin();
 
     setState(() {
       _quest = questSavedData;
+      _isBuy = isBuy;
+      _isTime = isTime;
+      _isAttem = isAttem;
+      dymond = dymondSavedData;
+      coint = cointSavedData;
     });
     if (_quest > 20) {
       _quest = 0;
@@ -148,7 +164,7 @@ class _MainScreenState extends State<MainScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
                     onTap: () {
@@ -216,7 +232,6 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     child: InkWell(
                       onTap: () async {
-                        final isBuy = await Premium.getSubscrp();
                         if (index == 0) {
                           await SavedData.setGameSimply(GameSimply.norm);
                         } else if (index == 1) {
@@ -229,7 +244,7 @@ class _MainScreenState extends State<MainScreen> {
                         } else if (index == 4) {
                           await SavedData.setGameSimply(GameSimply.tournament);
                         }
-                        if (!isBuy && index > 2) {
+                        if (!_isBuy && index > 2) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -238,6 +253,24 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             ),
                           );
+                        } else if (!_isTime && index == 1) {
+                          dymond = dymond - 100;
+                          if (dymond < 0) {
+                            showErrorSnackBar("You don't have enough diamonds");
+                          } else {
+                            await SavedData.setDymond(dymond);
+                            await SavedData.setTime(true);
+                            setState(() {});
+                          }
+                        } else if (!_isAttem && index == 2) {
+                          coint = coint - 5000;
+                          if (coint < 0) {
+                            showErrorSnackBar("You don't have enough coin");
+                          } else {
+                            await SavedData.setCoin(coint);
+                            await SavedData.setAttempts(true);
+                            setState(() {});
+                          }
                         } else {
                           Navigator.push(
                             context,
@@ -248,7 +281,13 @@ class _MainScreenState extends State<MainScreen> {
                         }
                       },
                       child: Image.asset(
-                        listImage[index],
+                        !_isBuy && index > 2
+                            ? listImageLock[index]
+                            : !_isTime && index == 1
+                                ? listImageLock[index]
+                                : !_isAttem && index == 2
+                                    ? listImageLock[index]
+                                    : listImage[index],
                       ),
                     ),
                   );
