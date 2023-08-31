@@ -19,10 +19,12 @@ class _DailyScreenState extends State<DailyScreen> {
   DateTime date = DateTime.now();
 
   List<String> list = [];
+  List<String> dayListChek = [];
+
+  int dayInt = 0;
 
   @override
   void initState() {
-    day = '${date.weekday}';
     super.initState();
     savedData();
   }
@@ -31,11 +33,83 @@ class _DailyScreenState extends State<DailyScreen> {
     var coinSavedData = await SavedData.getCoin();
     var dymondSavedData = await SavedData.getDymond();
     var listSavedData = await SavedData.getDailyListChek();
+    var dayIntSavedData = await SavedData.getDay();
+    var dayListChekSavedData = await SavedData.getDayListChek();
     setState(() {
       coin = coinSavedData;
       dymond = dymondSavedData;
       list = listSavedData;
+      dayInt = dayIntSavedData;
+      dayListChek = dayListChekSavedData;
     });
+    day = '$dayInt';
+    print(day);
+    print(dayInt);
+    if (dayInt > 6) {
+      print('aaaaaa');
+      dayInt = 0;
+      await SavedData.setDay(dayInt);
+      list.clear();
+      dayListChek.clear();
+      await SavedData.setDailyListChek(list);
+      await SavedData.setDayListChek(dayListChek);
+    } else if (date.weekday == 1) {
+      if (dayListChek.contains('1')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('1');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    } else if (date.weekday == 2) {
+     if (dayListChek.contains('2')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('2');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    } else if (date.weekday == 3) {
+      if (dayListChek.contains('3')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('3');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    } else if (date.weekday == 4) {
+      if (dayListChek.contains('4')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('4');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    } else if (date.weekday == 5) {
+     if (dayListChek.contains('5')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('5');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    } else if (date.weekday == 6) {
+      if (dayListChek.contains('6')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('6');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    } else if (date.weekday == 7) {
+      if (dayListChek.contains('7')) {
+      } else {
+        dayInt += 1;
+        dayListChek.add('7');
+        await SavedData.setDay(dayInt);
+        await SavedData.setDayListChek(dayListChek);
+      }
+    }
   }
 
   @override
@@ -106,10 +180,10 @@ class _DailyScreenState extends State<DailyScreen> {
                             ? day == '1'
                                 ? 1
                                 : 1
-                          : date.weekday == 1
+                            : dayInt == 1
                                 ? 2
                                 : 3,
-                        onTap: date.weekday == 1
+                        onTap: dayInt == 1
                             ? () async {
                                 setState(() {
                                   day = '1';
@@ -132,10 +206,10 @@ class _DailyScreenState extends State<DailyScreen> {
                             ? day == '2'
                                 ? 1
                                 : 1
-                            : date.weekday == 2
+                            : dayInt == 2
                                 ? 2
                                 : 3,
-                        onTap: date.weekday == 2
+                        onTap: dayInt == 2
                             ? () async {
                                 setState(() {
                                   day = '2';
@@ -165,10 +239,10 @@ class _DailyScreenState extends State<DailyScreen> {
                             ? day == '3'
                                 ? 1
                                 : 1
-                         : date.weekday == 3
+                            : dayInt == 3
                                 ? 2
                                 : 3,
-                        onTap: date.weekday == 3
+                        onTap: dayInt == 3
                             ? () async {
                                 setState(() {
                                   day = '3';
@@ -191,10 +265,10 @@ class _DailyScreenState extends State<DailyScreen> {
                             ? day == '4'
                                 ? 1
                                 : 1
-                           : date.weekday == 4
+                            : dayInt == 4
                                 ? 2
                                 : 3,
-                        onTap: date.weekday == 4
+                        onTap: dayInt == 4
                             ? () async {
                                 setState(() {
                                   day = '4';
@@ -224,10 +298,10 @@ class _DailyScreenState extends State<DailyScreen> {
                             ? day == '5'
                                 ? 1
                                 : 1
-                           : date.weekday == 5
+                            : dayInt == 5
                                 ? 2
                                 : 3,
-                        onTap: date.weekday == 5
+                        onTap: dayInt == 5
                             ? () async {
                                 setState(() {
                                   day = '5';
@@ -252,10 +326,10 @@ class _DailyScreenState extends State<DailyScreen> {
                             ? day == '6'
                                 ? 1
                                 : 1
-                            : date.weekday == 6
+                            : dayInt == 6
                                 ? 2
                                 : 3,
-                        onTap: date.weekday == 6
+                        onTap: dayInt == 6
                             ? () async {
                                 setState(() {
                                   day = '6';
@@ -282,10 +356,10 @@ class _DailyScreenState extends State<DailyScreen> {
                         ? day == '7'
                             ? 1
                             : 1
-                        : date.weekday == 7
-                                ? 2
-                                : 3,
-                    onTap: date.weekday == 7
+                        : dayInt == 7
+                            ? 2
+                            : 3,
+                    onTap: dayInt == 7
                         ? () async {
                             setState(() {
                               day = '7';

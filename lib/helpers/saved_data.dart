@@ -144,4 +144,24 @@ static Future<List<String>> getDailyListChek() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('DailyListChek', shopListChek);
   }
+
+  static Future<int> getDay() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('Day') ?? 0;
+  }
+
+  static Future<void> setDay(int day) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('Day', day);
+  }
+
+  static Future<List<String>> getDayListChek() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('DayListChek') ?? [];
+  }
+
+  static Future<void> setDayListChek(List<String> shopListChek) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('DayListChek', shopListChek);
+  }
 }
