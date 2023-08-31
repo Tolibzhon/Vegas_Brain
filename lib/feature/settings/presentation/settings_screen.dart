@@ -1,6 +1,7 @@
 import 'package:apphud/apphud.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vegas_brain_game/config/app_url.dart';
 import 'package:vegas_brain_game/config/premium.dart';
@@ -97,7 +98,17 @@ class SettingsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                try {
+                  final InAppReview inAppReview = InAppReview.instance;
+
+                  if (await inAppReview.isAvailable()) {
+                    inAppReview.requestReview();
+                  }
+                } catch (e) {
+                  throw Exception(e);
+                }
+              },
               child: Image.asset(AppImages.rate, height: 64),
             ),
             const SizedBox(height: 16),

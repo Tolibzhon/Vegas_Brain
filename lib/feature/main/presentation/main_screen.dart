@@ -240,8 +240,8 @@ class _MainScreenState extends State<MainScreen> {
                   return AnimatedPadding(
                     duration: const Duration(milliseconds: 300),
                     padding: EdgeInsets.symmetric(
-                      vertical: _chek ? 50 : 60,
-                      horizontal: 2,
+                      vertical: _chek ? 50 : 0,
+                      horizontal: 0,
                     ),
                     child: InkWell(
                       onTap: () async {

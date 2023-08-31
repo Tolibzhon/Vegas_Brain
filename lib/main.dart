@@ -1,10 +1,26 @@
+import 'package:apphud/apphud.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:vegas_brain_game/config/app_url.dart';
 import 'package:vegas_brain_game/feature/auth/splash_screen.dart';
 
 final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Apphud.start(apiKey: AppUrl.apphudApiKey);
+
   runApp(const MyApp());
+  await Future.delayed(const Duration(seconds: 12));
+  try {
+    final InAppReview inAppReview = InAppReview.instance;
+
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
+  } catch (e) {
+    throw Exception(e);
+  }
 }
 
 class MyApp extends StatelessWidget {
