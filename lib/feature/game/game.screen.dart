@@ -6,6 +6,7 @@ import 'package:vegas_brain_game/feature/game/lose_screen.dart';
 import 'package:vegas_brain_game/feature/game/win_screen.dart';
 import 'package:vegas_brain_game/feature/main/presentation/main_screen.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
+import 'package:vegas_brain_game/helpers/app_colors.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
 import 'package:vegas_brain_game/helpers/app_text_styles.dart';
 import 'package:vegas_brain_game/helpers/const.dart';
@@ -33,6 +34,9 @@ class _GameScreenState extends State<GameScreen> {
 
   int openedCardCount = 0;
 
+  int player = 1;
+  int round = 1;
+
   @override
   void initState() {
     super.initState();
@@ -44,9 +48,15 @@ class _GameScreenState extends State<GameScreen> {
     int questSavedData = await SavedData.getQuest();
     int diamondSavedData = await SavedData.getDymond();
 
+    int playerSavedData = await SavedData.getPlayer();
+
+    int roundSavedData = await SavedData.getTournament();
+
     setState(() {
       _quest = questSavedData;
       _diamond = diamondSavedData;
+      player = playerSavedData;
+      round = roundSavedData;
     });
   }
 
@@ -124,18 +134,53 @@ class _GameScreenState extends State<GameScreen> {
     return '${clockTimer.inMinutes.remainder(60).toString().padLeft(2, '0')}:${clockTimer.inSeconds.remainder(60).toString().padLeft(2, '0')}';
   }
 
+  Future<void> player1() async {
+    player += 1;
+    await SavedData.setPlayer(player);
+    await SavedData.setPlayer1(0);
+  }
+
+  Future<void> player2() async {
+    await SavedData.setPlayer2(0);
+    await SavedData.setPlayer(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (tries == 0) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoseScreen(),
-          ),
-          (route) => false,
-        );
-      });
+      if (textGameSimply == GameSimply.twoPlayer && player == 1) {
+        player1();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const GameScreen(),
+            ),
+            (route) => false,
+          );
+        });
+      } else if (textGameSimply == GameSimply.twoPlayer && player == 2) {
+        player2();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const WinScreen(),
+            ),
+            (route) => false,
+          );
+        });
+      } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoseScreen(),
+            ),
+            (route) => false,
+          );
+        });
+      }
     }
     return Scaffold(
       body: Container(
@@ -184,13 +229,22 @@ class _GameScreenState extends State<GameScreen> {
                           )
                         : textGameSimply == GameSimply.time
                             ? Text(minutesConvert(seconds),
-                                style:
-                                    AppTextStyles.s36W900(color: Colors.white))
+                                style: AppTextStyles.s36W900(
+                                    color: AppColors.colorFDD835Yellow))
                             : textGameSimply == GameSimply.gameAttempts
                                 ? Text('$tries',
                                     style: AppTextStyles.s36W900(
-                                        color: Colors.white))
-                                : const Text(''),
+                                        color: AppColors.colorFDD835Yellow))
+                                : textGameSimply == GameSimply.twoPlayer
+                                    ? Text('Player$player  $tries',
+                                        style: AppTextStyles.s36W900(
+                                            color: AppColors.colorFDD835Yellow))
+                                    : textGameSimply == GameSimply.tournament
+                                        ? Text('Round $round ',
+                                            style: AppTextStyles.s36W900(
+                                                color: AppColors
+                                                    .colorFDD835Yellow))
+                                        : const Text(''),
                     const SizedBox(width: 40),
                   ],
                 ),
@@ -236,7 +290,9 @@ class _GameScreenState extends State<GameScreen> {
                                     if (_game.matchCheck[0].values.first ==
                                         _game.matchCheck[1].values.first) {
                                       if (textGameSimply ==
-                                          GameSimply.gameAttempts) {
+                                              GameSimply.gameAttempts ||
+                                          textGameSimply ==
+                                              GameSimply.twoPlayer) {
                                         setState(() {
                                           tries--;
                                         });
@@ -253,15 +309,52 @@ class _GameScreenState extends State<GameScreen> {
                                           _diamond += 1;
                                           await SavedData.setDymond(_diamond);
                                         }
-
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                WinScreen(coin: _count),
-                                          ),
-                                          (route) => false,
-                                        );
+                                        if (textGameSimply ==
+                                                GameSimply.twoPlayer &&
+                                            player == 1) {
+                                          player += 1;
+                                          await SavedData.setPlayer(player);
+                                          await SavedData.setPlayer1(tries);
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GameScreen(),
+                                            ),
+                                            (route) => false,
+                                          );
+                                        } else {
+                                          if (textGameSimply ==
+                                              GameSimply.twoPlayer) {
+                                            await SavedData.setPlayer(1);
+                                            await SavedData.setPlayer2(tries);
+                                          }
+                                          if (textGameSimply ==
+                                                  GameSimply.tournament &&
+                                              round < 3) {
+                                                round += 1;
+                                              await SavedData.setTournament(
+                                                  round);
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    GameScreen(),
+                                              ),
+                                              (route) => false,
+                                            );
+                                          } else {
+                                              
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    WinScreen(coin: _count),
+                                              ),
+                                              (route) => false,
+                                            );
+                                          }
+                                        }
                                       }
                                       openedCardCount = 0;
                                       _game.matchCheck.clear();
@@ -275,7 +368,9 @@ class _GameScreenState extends State<GameScreen> {
                                           isCardFlipped[_game.matchCheck[1].keys
                                               .first] = false;
                                           if (textGameSimply ==
-                                              GameSimply.gameAttempts) {
+                                                  GameSimply.gameAttempts ||
+                                              textGameSimply ==
+                                                  GameSimply.twoPlayer) {
                                             tries--;
                                           }
                                           openedCardCount = 0;

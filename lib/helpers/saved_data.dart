@@ -71,4 +71,47 @@ class SavedData {
     final prefs = await SharedPreferences.getInstance();
     prefs.setStringList('ShopListChek', shopListChek);
   }
+
+//-----------------------------------------
+static Future<int> getTournament() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('Tournament') ?? 1;
+  }
+
+  static Future<void> setTournament(int tournament) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('Tournament', tournament);
+  }
+
+  static Future<int> getPlayer() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('Player') ?? 1;
+  }
+
+  static Future<void> setPlayer(int player) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('Player', player);
+  }
+
+  static Future<int> getPlayer1() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('Player1') ?? 0;
+  }
+
+  static Future<void> setPlayer1(int player) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('Player1', player);
+  }
+
+  static Future<int> getPlayer2() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('Player2') ?? 0;
+  }
+
+  static Future<void> setPlayer2(int player) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('Player2', player);
+  }
+
+//-----------------------------------------
 }

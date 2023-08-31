@@ -4,12 +4,42 @@ import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_colors.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
 import 'package:vegas_brain_game/helpers/app_text_styles.dart';
+import 'package:vegas_brain_game/helpers/const.dart';
+import 'package:vegas_brain_game/helpers/saved_data.dart';
 
-class WinScreen extends StatelessWidget {
-  const WinScreen({super.key, required this.coin});
-  final int coin;
+class WinScreen extends StatefulWidget {
+  const WinScreen({super.key,  this.coin});
+  final int? coin;
+
+  @override
+  State<WinScreen> createState() => _WinScreenState();
+}
+
+class _WinScreenState extends State<WinScreen> {
+  int player1 = 0;
+  int player2 = 0;
+  String textGameSimply = '';
+  @override
+  void initState() {
+    super.initState();
+    savedData();
+  }
+
+  Future<void> savedData() async {
+    int player1SavedData = await SavedData.getPlayer1();
+    int player2SavedData = await SavedData.getPlayer2();
+    String textSavedData = await SavedData.getGameSimply();
+    setState(() {
+      player1 = player1SavedData;
+      player2 = player2SavedData;
+      textGameSimply = textSavedData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('player1 $player1');
+     print('player2 $player2');
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -46,30 +76,40 @@ class WinScreen extends StatelessWidget {
                           const SizedBox(height: 32),
                           Image.asset(AppImages.youWin, width: 176),
                           const SizedBox(height: 32),
-                          Container(
-                            width: 244,
-                            height: 68,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(83),
-                                color:
-                                    AppColors.color13235FBlue.withOpacity(0.6)),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'REWARDS',
-                                  style: AppTextStyles.s16W400(
+                          textGameSimply == GameSimply.twoPlayer
+                              ? Text(
+                                  player1 > player2
+                                      ? 'Win Player 1!'
+                                      : player1 < player2
+                                          ? 'Win Player 2!'
+                                          : 'Draw in the game!',
+                                  style: AppTextStyles.s28W600(
                                       color: AppColors.white),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  '$coin',
-                                  style: AppTextStyles.s20W900(
-                                      color: AppColors.white),
-                                ),
-                              ],
-                            ),
-                          )
+                                )
+                              : Container(
+                                  width: 244,
+                                  height: 68,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(83),
+                                      color: AppColors.color13235FBlue
+                                          .withOpacity(0.6)),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'REWARDS',
+                                        style: AppTextStyles.s16W400(
+                                            color: AppColors.white),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        '${widget.coin}',
+                                        style: AppTextStyles.s20W900(
+                                            color: AppColors.white),
+                                      ),
+                                    ],
+                                  ),
+                                )
                         ],
                       )),
                 ]),
