@@ -134,4 +134,14 @@ class SavedData {
   }
 
 //-----------------------------------------
+
+static Future<List<String>> getDailyListChek() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('DailyListChek') ?? [];
+  }
+
+  static Future<void> setDailyListChek(List<String> shopListChek) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('DailyListChek', shopListChek);
+  }
 }

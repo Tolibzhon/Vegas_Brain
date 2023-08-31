@@ -8,7 +8,7 @@ import 'package:vegas_brain_game/helpers/const.dart';
 import 'package:vegas_brain_game/helpers/saved_data.dart';
 
 class WinScreen extends StatefulWidget {
-  const WinScreen({super.key,  this.coin});
+  const WinScreen({super.key, this.coin});
   final int? coin;
 
   @override
@@ -38,8 +38,6 @@ class _WinScreenState extends State<WinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('player1 $player1');
-     print('player2 $player2');
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),
