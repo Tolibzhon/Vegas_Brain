@@ -12,7 +12,7 @@ class WidgetDaily extends StatelessWidget {
   });
   final String image;
   final String text;
-  final bool isActive;
+  final int isActive;
   final Function() onTap;
   final double? width;
 
@@ -37,7 +37,7 @@ class WidgetDaily extends StatelessWidget {
           height: 36,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            gradient: isActive
+            gradient: isActive==1
                 ? const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -46,12 +46,20 @@ class WidgetDaily extends StatelessWidget {
                       Color(0xff23780E),
                     ],
                   )
-                : const LinearGradient(
+                :isActive==2
+                ? const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
                       Color(0xffFFE158),
                       Color(0xffB5970F),
+                    ],
+                  ):const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xff909090),
+                      Color(0xff606060),
                     ],
                   ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vegas_brain_game/feature/main/presentation/widget/widget_daily.dart';
 import 'package:vegas_brain_game/feature/widgets/spaces.dart';
 import 'package:vegas_brain_game/helpers/app_images.dart';
+import 'package:vegas_brain_game/helpers/saved_data.dart';
 
 class DailyScreen extends StatefulWidget {
   const DailyScreen({super.key});
@@ -11,7 +12,32 @@ class DailyScreen extends StatefulWidget {
 }
 
 class _DailyScreenState extends State<DailyScreen> {
-  String day = '1';
+  late String day;
+  int coin = 0;
+  int dymond = 0;
+
+  DateTime date = DateTime.now();
+
+  List<String> list = [];
+
+  @override
+  void initState() {
+    day = '${date.weekday}';
+    super.initState();
+    savedData();
+  }
+
+  Future<void> savedData() async {
+    var coinSavedData = await SavedData.getCoin();
+    var dymondSavedData = await SavedData.getDymond();
+    var listSavedData = await SavedData.getDailyListChek();
+    setState(() {
+      coin = coinSavedData;
+      dymond = dymondSavedData;
+      list = listSavedData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,23 +97,55 @@ class _DailyScreenState extends State<DailyScreen> {
                     children: [
                       WidgetDaily(
                         image: AppImages.day1,
-                        text: day == '1' ? 'DONE' : 'GET',
-                        isActive: day == '1',
-                        onTap: () {
-                          setState(() {
-                            day = '1';
-                          });
-                        },
+                        text: list.contains('1')
+                            ? day == '1'
+                                ? 'DONE'
+                                : 'DONE'
+                            : 'GET',
+                        isActive: list.contains('1')
+                            ? day == '1'
+                                ? 1
+                                : 1
+                          : date.weekday == 1
+                                ? 2
+                                : 3,
+                        onTap: date.weekday == 1
+                            ? () async {
+                                setState(() {
+                                  day = '1';
+                                });
+                                coin = coin + 25;
+                                await SavedData.setCoin(coin);
+                                list.add(day);
+                                await SavedData.setDailyListChek(list);
+                              }
+                            : () {},
                       ),
                       WidgetDaily(
                         image: AppImages.day2,
-                        text: day == '2' ? 'DONE' : 'GET',
-                        isActive: day == '2',
-                        onTap: () {
-                          setState(() {
-                            day = '2';
-                          });
-                        },
+                        text: list.contains('2')
+                            ? day == '2'
+                                ? 'DONE'
+                                : 'DONE'
+                            : 'GET',
+                        isActive: list.contains('2')
+                            ? day == '2'
+                                ? 1
+                                : 1
+                            : date.weekday == 2
+                                ? 2
+                                : 3,
+                        onTap: date.weekday == 2
+                            ? () async {
+                                setState(() {
+                                  day = '2';
+                                });
+                                coin = coin + 50;
+                                await SavedData.setCoin(coin);
+                                list.add(day);
+                                await SavedData.setDailyListChek(list);
+                              }
+                            : () {},
                       ),
                     ],
                   ),
@@ -98,23 +156,55 @@ class _DailyScreenState extends State<DailyScreen> {
                     children: [
                       WidgetDaily(
                         image: AppImages.day3,
-                        text: day == '3' ? 'DONE' : 'GET',
-                        isActive: day == '3',
-                        onTap: () {
-                          setState(() {
-                            day = '3';
-                          });
-                        },
+                        text: list.contains('3')
+                            ? day == '3'
+                                ? 'DONE'
+                                : 'DONE'
+                            : 'GET',
+                        isActive: list.contains('3')
+                            ? day == '3'
+                                ? 1
+                                : 1
+                         : date.weekday == 3
+                                ? 2
+                                : 3,
+                        onTap: date.weekday == 3
+                            ? () async {
+                                setState(() {
+                                  day = '3';
+                                });
+                                coin = coin + 150;
+                                await SavedData.setCoin(coin);
+                                list.add(day);
+                                await SavedData.setDailyListChek(list);
+                              }
+                            : () {},
                       ),
                       WidgetDaily(
                         image: AppImages.day4,
-                        text: day == '4' ? 'DONE' : 'GET',
-                        isActive: day == '4',
-                        onTap: () {
-                          setState(() {
-                            day = '4';
-                          });
-                        },
+                        text: list.contains('4')
+                            ? day == '4'
+                                ? 'DONE'
+                                : 'DONE'
+                            : 'GET',
+                        isActive: list.contains('4')
+                            ? day == '4'
+                                ? 1
+                                : 1
+                           : date.weekday == 4
+                                ? 2
+                                : 3,
+                        onTap: date.weekday == 4
+                            ? () async {
+                                setState(() {
+                                  day = '4';
+                                });
+                                coin = coin + 250;
+                                await SavedData.setCoin(coin);
+                                list.add(day);
+                                await SavedData.setDailyListChek(list);
+                              }
+                            : () {},
                       ),
                     ],
                   ),
@@ -125,23 +215,57 @@ class _DailyScreenState extends State<DailyScreen> {
                     children: [
                       WidgetDaily(
                         image: AppImages.day5,
-                        text: day == '5' ? 'DONE' : 'GET',
-                        isActive: day == '5',
-                        onTap: () {
-                          setState(() {
-                            day = '5';
-                          });
-                        },
+                        text: list.contains('5')
+                            ? day == '5'
+                                ? 'DONE'
+                                : 'DONE'
+                            : 'GET',
+                        isActive: list.contains('5')
+                            ? day == '5'
+                                ? 1
+                                : 1
+                           : date.weekday == 5
+                                ? 2
+                                : 3,
+                        onTap: date.weekday == 5
+                            ? () async {
+                                setState(() {
+                                  day = '5';
+                                });
+                                coin = coin + 250;
+                                dymond = dymond + 2;
+                                await SavedData.setCoin(coin);
+                                await SavedData.setDymond(dymond);
+                                list.add(day);
+                                await SavedData.setDailyListChek(list);
+                              }
+                            : () {},
                       ),
                       WidgetDaily(
                         image: AppImages.day6,
-                        text: day == '6' ? 'DONE' : 'GET',
-                        isActive: day == '6',
-                        onTap: () {
-                          setState(() {
-                            day = '6';
-                          });
-                        },
+                        text: list.contains('6')
+                            ? day == '6'
+                                ? 'DONE'
+                                : 'DONE'
+                            : 'GET',
+                        isActive: list.contains('6')
+                            ? day == '6'
+                                ? 1
+                                : 1
+                            : date.weekday == 6
+                                ? 2
+                                : 3,
+                        onTap: date.weekday == 6
+                            ? () async {
+                                setState(() {
+                                  day = '6';
+                                });
+                                coin = coin + 350;
+                                await SavedData.setCoin(coin);
+                                list.add(day);
+                                await SavedData.setDailyListChek(list);
+                              }
+                            : () {},
                       ),
                     ],
                   ),
@@ -149,13 +273,31 @@ class _DailyScreenState extends State<DailyScreen> {
                   WidgetDaily(
                     width: getWidth(context),
                     image: AppImages.day7,
-                    text: day == '7' ? 'DONE' : 'GET',
-                    isActive: day == '7',
-                    onTap: () {
-                      setState(() {
-                        day = '7';
-                      });
-                    },
+                    text: list.contains('7')
+                        ? day == '7'
+                            ? 'DONE'
+                            : 'DONE'
+                        : 'GET',
+                    isActive: list.contains('7')
+                        ? day == '7'
+                            ? 1
+                            : 1
+                        : date.weekday == 7
+                                ? 2
+                                : 3,
+                    onTap: date.weekday == 7
+                        ? () async {
+                            setState(() {
+                              day = '7';
+                            });
+                            coin = coin + 500;
+                            dymond = dymond + 5;
+                            await SavedData.setCoin(coin);
+                            await SavedData.setDymond(dymond);
+                            list.add(day);
+                            await SavedData.setDailyListChek(list);
+                          }
+                        : () {},
                   ),
                 ],
               ),
