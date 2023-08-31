@@ -2,6 +2,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vegas_brain_game/helpers/const.dart';
 
 class SavedData {
+  static Future<bool> getTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('IsTime') ?? false;
+  }
+
+  static Future<void> setTime(bool time) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('IsTime', time);
+  }
+
+  static Future<bool> getAttempts() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('IsAttem') ?? false;
+  }
+
+  static Future<void> setAttempts(bool attem) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('IsAttem', attem);
+  }
+
   static Future<int> getQuest() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('Quest') ?? 0;
@@ -73,7 +93,7 @@ class SavedData {
   }
 
 //-----------------------------------------
-static Future<int> getTournament() async {
+  static Future<int> getTournament() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('Tournament') ?? 1;
   }
