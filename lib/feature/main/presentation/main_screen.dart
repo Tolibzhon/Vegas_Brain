@@ -75,6 +75,18 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  String getImagePath(int index) {
+    if (!_isBuy && index > 2) {
+      return listImageLock[index];
+    } else if (!_isTime && index == 1) {
+      return listImageLock[index];
+    } else if (!_isAttem && index == 2) {
+      return listImageLock[index];
+    } else {
+      return listImage[index];
+    }
+  }
+
   @override
   void dispose() {
     pageController.dispose();
@@ -167,11 +179,12 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async {
+                      await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const DailyScreen()));
+                      setState(() {});
                     },
                     child: Image.asset(AppImages.imageDaily, height: 80),
                   ),
@@ -260,7 +273,9 @@ class _MainScreenState extends State<MainScreen> {
                           } else {
                             await SavedData.setDymond(dymond);
                             await SavedData.setTime(true);
-                            setState(() {});
+                            setState(() {
+                              _isTime = true;
+                            });
                           }
                         } else if (!_isAttem && index == 2) {
                           coint = coint - 5000;
@@ -269,7 +284,9 @@ class _MainScreenState extends State<MainScreen> {
                           } else {
                             await SavedData.setCoin(coint);
                             await SavedData.setAttempts(true);
-                            setState(() {});
+                            setState(() {
+                              _isAttem = true;
+                            });
                           }
                         } else {
                           Navigator.push(
@@ -281,13 +298,7 @@ class _MainScreenState extends State<MainScreen> {
                         }
                       },
                       child: Image.asset(
-                        !_isBuy && index > 2
-                            ? listImageLock[index]
-                            : !_isTime && index == 1
-                                ? listImageLock[index]
-                                : !_isAttem && index == 2
-                                    ? listImageLock[index]
-                                    : listImage[index],
+                        getImagePath(index),
                       ),
                     ),
                   );
@@ -296,8 +307,17 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Image.asset(
-                AppImages.bonusButton,
+              child: InkWell(
+                onTap: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DailyScreen()));
+                  setState(() {});
+                },
+                child: Image.asset(
+                  AppImages.bonusButton,
+                ),
               ),
             ),
           ],
